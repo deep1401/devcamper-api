@@ -4,7 +4,7 @@ const geocoder = require("../utils/geocoder");
 const asyncHandler = require("../middleware/async");
 
 // @desc Get all bootcamps
-// @route GET /bootcamps/api/v1
+// @route GET /api/v1/bootcamps
 // @access Public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
   let query;
@@ -82,7 +82,7 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Get single bootcamp
-// @route GET /bootcamps/api/v1/:id
+// @route GET /api/v1/bootcamps/:id
 // @access Public
 exports.getBootcamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findById(req.params.id);
@@ -95,7 +95,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Create new bootcamp
-// @route POST /bootcamps/api/v1/
+// @route POST /api/v1/bootcamps
 // @access Private
 exports.createBootcamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.create(req.body);
@@ -103,7 +103,7 @@ exports.createBootcamp = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Update single bootcamp
-// @route PUT /bootcamps/api/v1/:id
+// @route PUT /api/v1/bootcamps/:id
 // @access Private
 exports.updateBootcamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
@@ -119,7 +119,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Delete single bootcamp
-// @route DELETE /bootcamps/api/v1/:id
+// @route DELETE /api/v1/bootcamps/:id
 // @access Private
 exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
@@ -132,7 +132,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Get Bootcamps by Distance
-// @route GET /bootcamps/api/v1/radius/:zipcode/:distance
+// @route GET /api/v1/bootcamps/radius/:zipcode/:distance
 // @access Private
 exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
   const { zipcode, distance } = req.params;
