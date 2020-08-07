@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
+const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const errorHandler = require("./middleware/error");
@@ -22,6 +23,9 @@ const app = express();
 
 //Body parser
 app.use(express.json());
+
+//Cookie Parser
+app.use(cookieParser);
 
 //Use Morgan for debugging
 if (process.env.NODE_ENV === "development") {
