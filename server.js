@@ -25,7 +25,7 @@ const app = express();
 app.use(express.json());
 
 //Cookie Parser
-app.use(cookieParser);
+app.use(cookieParser());
 
 //Use Morgan for debugging
 if (process.env.NODE_ENV === "development") {
