@@ -46,6 +46,17 @@ exports.login = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+// @desc Get current logged in user
+// @route GET /api/v1/auth/me
+// @access Private
+
+exports.getMe = asyncHandler(async (req, res, next) => {
+  //const { id } = req.user;
+  //const user = await User.findById(id);
+
+  res.status(200).json({ success: true, data: req.user });
+});
+
 const sendTokenResponse = (user, statusCode, res) => {
   //Create token
   const token = user.getSignedJwtToken();
@@ -68,13 +79,23 @@ const sendTokenResponse = (user, statusCode, res) => {
     .json({ success: true, token });
 };
 
-// @desc Get current logged in user
-// @route GET /api/v1/auth/me
-// @access Private
+// @desc Forget Password token
+// @route POST /api/v1/auth/forgotpassword
+// @access Public
 
-exports.getMe = asyncHandler(async (req, res, next) => {
-  //const { id } = req.user;
-  //const user = await User.findById(id);
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
 
-  res.status(200).json({ success: true, data: req.user });
+  if (!user) {
+    return next(
+      new ErrorResponse(`There is no user with email ${req.body.email}`)
+    );
+  }
+
+  //Get reset password token
+  const resetToken = user.getResetPasswordToken();
+  console.log(resetToken);
+  await user.save({ validateBeforeSave: true });
+
+  res.status(200).json({ success: true, data: user });
 });
