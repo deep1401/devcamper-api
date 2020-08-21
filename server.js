@@ -6,6 +6,9 @@ const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const xss = require("xss-clean");
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
+const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const errorHandler = require("./middleware/error");
@@ -45,6 +48,20 @@ app.use(helmet());
 
 //Prevent Cross Site Scripting
 app.use(xss());
+
+//Rate Limit for requests made
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 100,
+});
+
+app.use(limiter);
+
+//Prevent HTTP Params Pollution
+app.use(hpp());
+
+//Enable CORS
+app.use(cors());
 
 //File upload
 app.use(fileUpload());
