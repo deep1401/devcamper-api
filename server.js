@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const colors = require("colors");
 const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const errorHandler = require("./middleware/error");
@@ -37,6 +39,12 @@ if (process.env.NODE_ENV === "development") {
 
 //Prevent SQL Injections
 app.use(mongoSanitize());
+
+//Secure Headers
+app.use(helmet());
+
+//Prevent Cross Site Scripting
+app.use(xss());
 
 //File upload
 app.use(fileUpload());
