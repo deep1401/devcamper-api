@@ -7,7 +7,7 @@ npm install
 ```
 
 ### Run the API
-```bash
+```node
 npm run dev (Development mode)
 npm start  (Production)
 ```
